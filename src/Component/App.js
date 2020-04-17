@@ -1,7 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux'
 import {ProductList} from 'Component/ProductList'
 import {ProductDetail} from 'Component/ProductDetail'
+import {
+  selectItem,
+  setProducts
+} from 'Redux/Actions/products'
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,7 +15,11 @@ import {
 import 'antd/dist/antd.css';
 
 
-function App({data, selectedItem, onSelectItem}) {
+function App({data, selectedItem, onSelectItem, onSetProducts, isLoader}) {
+  useEffect(() => {
+    !data.length && onSetProducts()
+  }, [])
+
   return (
     <Router>
         <Switch>
@@ -22,6 +30,7 @@ function App({data, selectedItem, onSelectItem}) {
             <ProductDetail item={selectedItem}/>
           </Route>
         </Switch>
+        {/* {isLoader && <Loader/>} */}
     </Router>
   );
 }
@@ -29,12 +38,14 @@ function App({data, selectedItem, onSelectItem}) {
 const mapToProps = (store) => {
   return {
     selectedItem: store.products.selected,
-    data: store.products.data
+    data: store.products.data,
+    loader: store.products.isLoader,
   }
 }
 
-const actions = (dispatch) => ({
-  onSelectItem: (item) => dispatch({type: 'SELECT_ITEM', item})
-})
+const actions = {
+  onSelectItem: selectItem,
+  onSetProducts: setProducts
+}
 
 export default connect(mapToProps, actions)(App);

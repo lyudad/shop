@@ -1,24 +1,10 @@
-
+import {SET_PRODUCTS} from '../Actions/products'
 
 const initialState = {
-    data: [
-        {
-           id: 1,
-           name: "шарик",
-           image: "https://heroeswm-uvz.at.ua/imgs/katalog_statey/tumblr_m07iyfLy0F1qce1ag.jpg"
-        },
-        {
-           id: 2,
-           name: "футболка",
-           image: "https://i.pinimg.com/originals/da/8b/d1/da8bd1d87e3e7c8d708571515fdc2725.jpg"
-        },
-        {
-           id: 4,
-           name: "шарик 2",
-           image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1200px-Heart_coraz%C3%B3n.svg.png"
-        }
-    ],
-    selected: {}
+    data: [],
+    selected: {},
+    err: null,
+    isLoader: false
 }
 
 const products = (state = initialState, action) => {
@@ -29,6 +15,20 @@ const products = (state = initialState, action) => {
                 selected: action.item
             }
             break
+        case 'SET_PRODUCTS.REQUEST':
+            console.log('action>>>', action)
+                return {
+                    ...state,
+                    isLoader: true
+                }
+                break
+        case 'SET_PRODUCTS.SUCCESS':
+            console.log('action>>>', action)
+                return {
+                    ...state,
+                    data: action.products
+                }
+                break
         default:
             return state
             break

@@ -1,7 +1,9 @@
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
+import apiMiddleware from 'Redux/Middleware/api'
+import { composeWithDevTools} from 'redux-devtools-extension'
 import reducer from './Reducers'
 
 export const create = () => {
-  return createStore(reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+  const enhancer = composeWithDevTools(applyMiddleware(apiMiddleware))
+  return createStore(reducer, enhancer)
 }
