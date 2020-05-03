@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { connect } from 'react-redux'
 import {ProductList} from 'Component/ProductList'
 import {ProductDetail} from 'Component/ProductDetail'
+import {Profile} from'Component/Profile'
 import {
   selectItem,
   setProducts
@@ -10,8 +11,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
+import { useAuth0 } from "Component/Auth0";
 import 'antd/dist/antd.css';
 
 
@@ -20,6 +21,12 @@ function App({data, selectedItem, onSelectItem, onSetProducts, isLoader}) {
     !data.length && onSetProducts()
   }, [])
 
+  const { loading, user } = useAuth0();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  console.log('user', user)
   return (
     <Router>
         <Switch>
@@ -28,6 +35,9 @@ function App({data, selectedItem, onSelectItem, onSetProducts, isLoader}) {
           </Route>
           <Route path="/details">
             <ProductDetail item={selectedItem}/>
+          </Route>
+          <Route path="/profile">
+            <Profile/>
           </Route>
         </Switch>
         {/* {isLoader && <Loader/>} */}
