@@ -5,11 +5,13 @@ import ReactCardFlip from 'react-card-flip';
 const { Meta } = CardComponent;
 
 
-export const Card = ({ item }) => {
+export const Card = ({ item, selectProduct }) => {
     const [isFlipped, onUpdateFlipped] = useState(false)
 
     const onClick = () => {
         onUpdateFlipped(!isFlipped)
+        console.log("item>>", item, selectProduct)
+        selectProduct(item)
     }
     return (
         <ReactCardFlip isFlipped={isFlipped}>

@@ -1,10 +1,9 @@
-import React from 'react';
-import {Layout} from 'UI/Layout'
+import {connect} from 'react-redux'
+import {ProductDetailComponent} from './ProductDetail'
 
-export const ProductDetail = ({item}) => {
-   return (
-      <Layout style={{ minHeight: '100vh' }}>
-            {item.name}
-      </Layout>
-   )
-}
+const mapStateToProps = (state) => {
+   return {
+   item: state.products.selectedProduct
+}}
+
+export const ProductDetail = connect(mapStateToProps)(ProductDetailComponent)

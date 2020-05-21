@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ProductList} from 'Component/ProductList'
 import {ProductDetail} from 'Component/ProductDetail'
 import {
@@ -10,11 +10,16 @@ import {
 import 'antd/dist/antd.css';
 
 function App() {
+  const [selectedProduct, selectProduct] = useState(null)
   return (
     <Router>
         <Switch>
-          <Route path="/" component={ProductList} exact/>
-          <Route path="/details" component={ProductDetail}/>
+          <Route path="/" exact>
+              <ProductList selectProduct={selectProduct}/>
+            </Route>
+          <Route path="/details" >
+            <ProductDetail selectedProduct={selectedProduct}/>
+          </Route>
         </Switch>
     </Router>
   );
